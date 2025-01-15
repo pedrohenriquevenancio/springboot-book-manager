@@ -44,6 +44,10 @@ public class BookModel implements Serializable {
     @OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
     private ReviewModel review;
 
+    @ManyToOne()
+    @JoinColumn(name = "category_id")
+    private CategoryModel category;
+
     public UUID getId() {
         return id;
     }
