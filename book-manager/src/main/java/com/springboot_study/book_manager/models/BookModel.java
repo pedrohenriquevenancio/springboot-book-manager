@@ -88,4 +88,12 @@ public class BookModel implements Serializable {
         this.review = review;
     }
 
+    public CategoryModel getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryModel category) {
+        this.category = category;
+    }
+
 }
