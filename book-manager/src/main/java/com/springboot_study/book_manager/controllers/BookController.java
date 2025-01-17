@@ -4,7 +4,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot_study.book_manager.models.BookModel;
+import com.springboot_study.book_manager.models.CategoryModel;
 import com.springboot_study.book_manager.services.BookService;
+import com.springboot_study.book_manager.services.CategoryService;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,28 +31,27 @@ public class BookController {
     @Autowired
     private BookService service;
 
+    @Autowired
+    private CategoryService categoryService;
+
     @GetMapping
     public ResponseEntity<List<BookModel>> findAll() {
-        List<BookModel> books = service.findAll();
-        return ResponseEntity.ok(books);
+        return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<BookModel> findById(@PathVariable UUID id) {
-        BookModel book = service.findById(id);
-        return ResponseEntity.ok(book);
+        return ResponseEntity.ok(service.findById(id));
     }
 
     @PostMapping
     public ResponseEntity<BookModel> store(@RequestBody BookModel body) {
-        BookModel book = service.store(body);
-        return ResponseEntity.status(HttpStatus.CREATED).body(book);
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.store(body));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<BookModel> update(@PathVariable UUID id, @RequestBody BookModel body) {
-        BookModel book = service.update(id, body);
-        return ResponseEntity.ok(book);
+        return ResponseEntity.ok(service.update(id, body));
     }
 
     @DeleteMapping("/{id}")
@@ -61,8 +62,13 @@ public class BookController {
 
     @PatchMapping("/{id}/set-category/{categoryId}")
     public ResponseEntity<BookModel> setCategory(@PathVariable UUID id, @PathVariable UUID categoryId) {
-        BookModel book = service.setCategory(id, categoryId);
-        return ResponseEntity.ok(book);
+        CategoryModel category = categoryService.findById(categoryId);
+        return ResponseEntity.ok(service.setCategory(id, category));
+    }
+
+    @PatchMapping("/{id}/unset-category")
+    public ResponseEntity<BookModel> unsetCategory(@PathVariable UUID id) {
+        return ResponseEntity.ok(service.unsetCategory(id));
     }
 
     @PatchMapping("/{id}/set-authors")

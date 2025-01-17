@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springboot_study.book_manager.models.BookModel;
+import com.springboot_study.book_manager.models.CategoryModel;
 import com.springboot_study.book_manager.repositories.BookRepository;
 
 @Service
@@ -43,8 +44,23 @@ public class BookService {
         repository.deleteById(id);
     }
 
-    public BookModel setCategory(UUID id, UUID categoryId) {
-        BookModel book = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Book not found"));
+    public BookModel setCategory(UUID id, CategoryModel category) {
+        BookModel book = repository.findById(id)
+        .map(oldBook -> {
+            oldBook.setCategory(category);
+            return repository.save(oldBook);
+        })
+        .orElseThrow(() -> new IllegalArgumentException("Book not found"));
+        return book;
+    }
+
+    public BookModel unsetCategory(UUID id) {
+        BookModel book = repository.findById(id)
+        .map(oldBook -> {
+            oldBook.setCategory(null);
+            return repository.save(oldBook);
+        })
+        .orElseThrow(() -> new IllegalArgumentException("Book not found"));
         return book;
     }
 

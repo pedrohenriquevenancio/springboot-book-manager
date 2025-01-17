@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,6 +48,7 @@ public class BookModel implements Serializable {
 
     @ManyToOne()
     @JoinColumn(name = "category_id")
+    @JsonIgnoreProperties("books")
     private CategoryModel category;
 
     public UUID getId() {
