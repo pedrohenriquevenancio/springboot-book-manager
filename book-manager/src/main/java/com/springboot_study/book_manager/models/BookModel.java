@@ -1,8 +1,12 @@
 package com.springboot_study.book_manager.models;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -50,6 +54,14 @@ public class BookModel implements Serializable {
     @JoinColumn(name = "category_id")
     @JsonIgnoreProperties("books")
     private CategoryModel category;
+
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime created_at;
+
+    @LastModifiedDate
+    @Column(nullable = false)
+    private LocalDateTime updated_at;
 
     public UUID getId() {
         return id;
