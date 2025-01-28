@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -31,6 +34,14 @@ public class CategoryModel implements Serializable {
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("category")
     private Set<BookModel> books;
+
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime created_at;
+
+    @LastModifiedDate
+    @Column(nullable = false)
+    private LocalDateTime updated_at;
 
     public UUID getId() {
         return id;
