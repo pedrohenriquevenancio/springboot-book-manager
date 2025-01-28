@@ -16,4 +16,8 @@ public class AuthorService {
     @Autowired
     private AuthorRepository repository;
 
+    public List<AuthorModel> findAll() {
+        return repository.findAll();
+    }
+
 }

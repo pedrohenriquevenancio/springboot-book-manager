@@ -26,5 +26,10 @@ public class AuthorController {
 
     @Autowired
     private AuthorService service;
+
+    @GetMapping
+    public ResponseEntity<List<AuthorModel>> findAll() {
+        return ResponseEntity.ok(service.findAll());
+    }
    
 }
