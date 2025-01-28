@@ -1,6 +1,7 @@
 package com.springboot_study.book_manager.models;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -33,7 +34,7 @@ public class CategoryModel implements Serializable {
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("category")
-    private Set<BookModel> books;
+    private Set<BookModel> books = new HashSet<>();
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

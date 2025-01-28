@@ -2,6 +2,7 @@ package com.springboot_study.book_manager.models;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -45,7 +46,7 @@ public class BookModel implements Serializable {
         name = "TB_BOOK_HAS_AUTHOR", 
         joinColumns = @JoinColumn(name = "book_id"), 
         inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private Set<AuthorModel> authors;
+    private Set<AuthorModel> authors = new HashSet<>();
 
     @OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
     private ReviewModel review;
